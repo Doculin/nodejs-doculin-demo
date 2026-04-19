@@ -1,6 +1,6 @@
 # Doculin Node Demo
 
-A Node.js demo of the Doculin PDF API. Click "View as PDF", the page HTML is sent to Doculin, the browser waits for a real-time callback, then opens the rendered PDF in a new tab.
+A Node.js demo of the [Doculin PDF API](https://doculin.com). Click "View as PDF", the page HTML is sent to Doculin, the browser waits for a real-time callback, then opens the rendered PDF in a new tab.
 
 Real-time updates are delivered over a native WebSocket — no external pub/sub hub required.
 
