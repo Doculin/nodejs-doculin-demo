@@ -1,0 +1,365 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modern Document Template</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      :root {
+        --primary-color: #0d6efd;
+        --secondary-color: #198754;
+      }
+
+      .a4-page {
+        width: 210mm;
+        height: 296mm;
+        padding: 20mm;
+        margin: 2rem auto;
+        background: white;
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        position: relative;
+      }
+
+      @media print {
+        body {
+          background: none;
+          margin: 0;
+          padding: 0;
+        }
+        .a4-page {
+          margin: 0;
+          box-shadow: none;
+          width: 100%;
+          height: 100%;
+        }
+        .no-print {
+          display: none !important;
+        }
+      }
+
+      .gradient-bg {
+        background: linear-gradient(
+          135deg,
+          #0d6efd 0%,
+          #20c997 50%,
+          #198754 100%
+        );
+      }
+
+      .abstract-shape {
+        position: absolute;
+        filter: blur(40px);
+        opacity: 0.2;
+        z-index: 0;
+      }
+
+      .loading-spinner {
+        display: inline-block;
+        border: 3px solid rgba(0, 0, 0, 0.1);
+        width: 1.25rem;
+        height: 1.25rem;
+        border-radius: 50%;
+        border-left-color: #0d6efd;
+        animation: spin 1s linear infinite;
+        margin-right: 0.5rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      .pdf-container {
+        width: 210mm;
+        height: 297mm;
+        padding: 20mm;
+        position: relative;
+        overflow: hidden;
+        background: white;
+        box-sizing: border-box;
+        page-break-after: avoid;
+        page-break-inside: avoid;
+      }
+    </style>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "@hotwired/stimulus": "https://esm.sh/@hotwired/stimulus@3.2.2"
+        }
+      }
+    </script>
+    <script type="module" src="/js/app.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      defer
+    ></script>
+  </head>
+  <body>
+    <div
+      class="bg-light py-5 no-print"
+      data-controller="pdf-generator"
+      data-pdf-generator-ws-url-value="<%= wsUrl %>"
+      data-pdf-generator-status-url-value="/pdf/status/{jobId}"
+      data-pdf-generator-generate-url-value="/pdf/generate"
+      data-pdf-generator-base-url-value="<%= baseUrl %>"
+      data-pdf-generator-doculin-domain-value="<%= doculinDomain %>"
+    >
+      <div
+        class="container mb-4 d-flex justify-content-end align-items-center"
+        style="max-width: 210mm"
+      >
+        <div
+          data-pdf-generator-target="status"
+          class="d-none align-items-center text-primary fw-bold me-3"
+        >
+          <span class="loading-spinner"></span>
+          Generating PDF...
+        </div>
+        <button
+          data-pdf-generator-target="button"
+          data-action="click->pdf-generator#generate"
+          class="btn btn-primary btn-lg shadow-sm fw-bold"
+        >
+          View as PDF
+        </button>
+      </div>
+
+      <div
+        data-pdf-generator-target="content"
+        class="a4-page text-dark bg-white"
+      >
+        <div
+          class="abstract-shape gradient-bg"
+          style="
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            top: -80px;
+            right: -80px;
+          "
+        ></div>
+        <div
+          class="abstract-shape bg-info"
+          style="
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            bottom: 80px;
+            left: -80px;
+          "
+        ></div>
+
+        <header
+          class="position-relative z-1 d-flex justify-content-between align-items-center mb-5"
+        >
+          <div class="d-flex align-items-center">
+            <div
+              class="gradient-bg rounded text-white fw-bold fs-4 d-flex align-items-center justify-center shadow-sm"
+              style="
+                width: 40px;
+                height: 40px;
+                text-align: center;
+                line-height: 40px;
+              "
+            >
+              D
+            </div>
+            <span class="ms-2 fw-black text-dark fs-3 tracking-tight"
+              >DOCULIN</span
+            >
+          </div>
+          <div
+            class="text-secondary text-uppercase small fw-bold tracking-widest"
+          >
+            2026 Edition
+          </div>
+        </header>
+
+        <main class="position-relative z-1 flex-grow-1">
+          <section class="mb-5">
+            <h1 class="display-4 fw-bold text-dark lh-sm mb-3">
+              Create <span class="text-primary">Modern</span> <br />
+              Documents Effortlessly.
+            </h1>
+            <p class="lead text-secondary mb-4" style="max-width: 500px">
+              A clean, professional template designed for clarity and impact.
+              Perfect for reports, resumes, and high-fidelity presentations.
+            </p>
+            <div class="row g-4">
+              <div class="col-6">
+                <div
+                  class="rounded-4 overflow-hidden shadow-sm h-100"
+                  style="min-height: 200px"
+                >
+                  <div
+                    class="w-100 h-100 gradient-bg d-flex align-items-center justify-content-center text-white opacity-50"
+                  >
+                    <svg
+                      width="80"
+                      height="80"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fill-rule="evenodd"
+                        d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z"
+                        clip-rule="evenodd"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="col-6 d-flex flex-column justify-content-between">
+                <div
+                  class="bg-white p-4 rounded-4 border shadow-sm flex-grow-1 mb-3"
+                >
+                  <h5 class="fw-bold text-primary mb-2">Dynamic Styling</h5>
+                  <p class="small text-secondary mb-0">
+                    Fully responsive and print-ready components that adapt to
+                    any medium.
+                  </p>
+                </div>
+                <div class="bg-dark p-4 rounded-4 shadow-sm">
+                  <h5 class="fw-bold text-white mb-2">Dark Excellence</h5>
+                  <p class="small text-light opacity-75 mb-0">
+                    Contrast that matters for professional readability.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section class="row g-4 mb-5 text-center">
+            <div class="col-4">
+              <div
+                class="bg-primary bg-opacity-10 text-primary rounded-3 p-3 d-inline-block mb-3"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  ></path>
+                </svg>
+              </div>
+              <h6 class="fw-bold">Fast</h6>
+              <p class="small text-muted mb-0">
+                Optimized for speed and performance.
+              </p>
+            </div>
+            <div class="col-4">
+              <div
+                class="bg-success bg-opacity-10 text-success rounded-3 p-3 d-inline-block mb-3"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                  ></path>
+                </svg>
+              </div>
+              <h6 class="fw-bold">Secure</h6>
+              <p class="small text-muted mb-0">
+                Enterprise-grade security built-in.
+              </p>
+            </div>
+            <div class="col-4">
+              <div
+                class="bg-info bg-opacity-10 text-info rounded-3 p-3 d-inline-block mb-3"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  ></path>
+                </svg>
+              </div>
+              <h6 class="fw-bold">Clean</h6>
+              <p class="small text-muted mb-0">
+                Minimalist design for better focus.
+              </p>
+            </div>
+          </section>
+
+          <section
+            class="bg-light rounded-5 p-4 d-flex align-items-center shadow-sm border"
+          >
+            <div
+              class="flex-shrink-0 bg-white rounded-4 p-2 shadow-sm"
+              style="width: 100px; height: 100px"
+            >
+              <div
+                class="w-100 h-100 rounded-3 bg-secondary bg-opacity-10 d-flex align-items-center justify-content-center text-secondary"
+              >
+                <svg
+                  width="48"
+                  height="48"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <div class="ms-4">
+              <h4 class="fw-bold mb-1">Join the revolution.</h4>
+              <p class="text-secondary small mb-2">
+                We are defining the future of digital documentation. Join
+                thousands of users who trust Doculin.
+              </p>
+              <div class="d-flex gap-2">
+                <span class="badge bg-white border text-dark">v1.2.0</span>
+                <span class="badge bg-white border text-success">Stable</span>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
